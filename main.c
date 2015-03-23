@@ -46,6 +46,7 @@ int main (int argc, char **argv)
                 break;
             case 'h':
                 printf ("Usage: Just pipe same numbers and I will print some others!\n"
+                "Example: $ cat random-walk.dat | histogram > walk-histogram.dat\n"
                 "-b --buffer=[integer] | Set number of max input lines.\n"
                 "-d --delta=[integer]  | Set row's delta.\n"
                 "-f --fancy            | Plot awesome graphs!\n"
