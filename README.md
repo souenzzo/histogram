@@ -4,14 +4,18 @@ A small CLI utility to make histograms
 To compile
 ----------
 Just run
+```
 	$ make
+```
 
 To 'Install'
 ------------
 Copy for some folder in your PATH and make it executable
+```bash
 	$ echo $PATH
 	# cp histogram /usr/bin/
 	# chmod +x /usr/bin/histogram
+```
 
 To use
 ------
