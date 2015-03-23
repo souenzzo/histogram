@@ -45,7 +45,15 @@ int main (int argc, char **argv)
                 fancy = 1;
                 break;
             case 'h':
-                printf ("HELP TEXT!\n");
+                printf ("Usage: Just pipe same numbers and I will print some others!\n"
+                "-b --buffer=[integer] | Set number of max input lines.\n"
+                "-d --delta=[integer]  | Set row's delta.\n"
+                "-f --fancy            | Plot awesome graphs!\n"
+                "-h --help             | Print help (this) text and exit.\n"
+                "-H --human            | Print same useful extra information.\n"
+                "-i --input=[file]     | Set a file to input instead stdin.\n"
+                "-o --output=[file]    | Set a file to output instead stdout.\n"
+                "-v --version          | Print version and exit.\n");
                 exit (0);
                 break;
             case 'H':
@@ -58,7 +66,7 @@ int main (int argc, char **argv)
                 fout = fopen(optarg,"w");
                 break;
             case 'v':
-                printf ("POSIX VERSION!\n");
+                printf ("histogram version dev!\n");
                 exit (0);
                 break;
             default:
@@ -104,11 +112,11 @@ int main (int argc, char **argv)
     int rowno = range / delta;
     int row [ rowno ];
     
-    /* Print same usefull data if '-H' is enabled */
+    /* Print same useful data if '-H' is enabled */
     if (human) fprintf( fout,
-        "Valores lidos: %d\n"
-        "Valor maximo:  %d\n"
-        "Valor minimo:  %d\n"
+        "Read values:   %d\n"
+        "Maximum value: %d\n"
+        "Minimum value: %d\n"
         "Range:         %d\n"
         "Delta:         %d\n"
         ,total,max,min,range,delta);
