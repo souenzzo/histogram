@@ -21,6 +21,7 @@ To use
 ------
 Pipe numeric data (integer only for now) to stdin and it will make a histogram with it
 Arguments
+`
 	-b --buffer=[integer] | Set number of max input lines
 	-d --delta=[integer]  | Set row's delta
 	-f --fancy            | Plot awesome graphs!
@@ -29,4 +30,4 @@ Arguments
 	-i --input=[file]     | Set a file to input instead stdin
 	-o --output=[file]    | Set a file to output instead stdout
 	-v --version          | Print version and exit
-
+`
