@@ -136,17 +136,19 @@ int main (int argc, char **argv)
     }
     if (fancy)
     {
-        char lol[] = "80";
+        int   col;
         char *envcol = getenv("COLUMNS");
-        if (! envcol ) envcol = lol;
-        int col;
-        sscanf(envcol,"%d",&col);
+        if ( envcol )
+        {
+            sscanf(envcol,"%d",&col);
+        }
+        else col = 80;
         fprintf(fout,"I'm so fancy, You already know! \u266A \n");
         for (i=0;i<rowno;i++)
         {
             fprintf(fout,"%d\t|", row[i]);
             for (j=0;j<((row[i] * col)/(2*maxrow));j++) fprintf(fout,"=");
-            fprintf(fout,"\n");
+            fprintf(fout,"|\n");
         }
     }
     else
