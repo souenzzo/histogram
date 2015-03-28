@@ -1,11 +1,12 @@
 TODOLIST
 An incomplete list of thing to improve in this program
-[ ] Make it float (allow float input)
+[v] Make it float (allow float input)
 [ ] Horizontal/Vertial/better plotting
-[ ] Remove columns with zero
+[ ] Allow to remove columns with zero
 [ ] PKGBUILD for Arch Linux
 [ ] 'PKGBUILD equivalent' for rpm
 [ ] 'PKGBUILD equivalent' for deb
+[ ] ypkg build
 [ ] Manpages
 [ ] Complete Makefile
 [ ] Slakcbuild recipe/script
