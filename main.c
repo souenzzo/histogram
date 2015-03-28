@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <limits.h>
+#include <float.h>
 #include <stdlib.h>
 #include <getopt.h>
 
@@ -7,9 +8,9 @@ int main (int argc, char **argv)
 {
     /* Variables for parsing arguments */
     int c,
-        option_index = 0;
-    int
-        buffer = 0,
+        option_index = 0,
+        buffer = 0;
+    double
         delta  = 0;
     unsigned char
         fancy = 0,
@@ -39,7 +40,7 @@ int main (int argc, char **argv)
                 sscanf(optarg,"%d",&buffer);
                 break;
             case 'd':
-                sscanf(optarg,"%d",&delta);
+                sscanf(optarg,"%lf",&delta);
                 break;
             case 'f':
                 fancy = 1;
@@ -48,7 +49,7 @@ int main (int argc, char **argv)
                 printf ("Usage: Just pipe same numbers and I will print some others!\n"
                 "Example: $ cat random-walk.dat | histogram > walk-histogram.dat\n"
                 "-b --buffer=[integer] | Set number of max input lines.\n"
-                "-d --delta=[integer]  | Set row's delta.\n"
+                "-d --delta=[float]    | Set row's delta.\n"
                 "-f --fancy            | Plot awesome graphs!\n"
                 "-h --help             | Print help (this) text and exit.\n"
                 "-H --human            | Print same useful extra information.\n"
@@ -82,15 +83,16 @@ int main (int argc, char **argv)
     if ( buffer < 1 ) buffer = BUFSIZ;
 
     /* Variables for parse data */
-    int i,j,
-        min = INT_MAX,
-        max = INT_MIN;    
-    int data[buffer];
+    int i,j;
+    double 
+        min = DBL_MAX,
+        max = DBL_MIN,
+        data[buffer];
 
     /* Parsing data */
     while ( ! feof(fin) )
     {
-        fscanf(fin,"%d",&data[i]);
+        fscanf(fin,"%lf",&data[i]);
         if ( data[i] < min ) min = data[i];
         if ( data[i] > max ) max = data[i];
         i++;
@@ -105,29 +107,30 @@ int main (int argc, char **argv)
     }
 
     /* Auxiliary variables */
+    double
+        range = max-min;
     int
-        range = max-min,
         total = i,
         maxrow = 0;
-    if ( delta < 1 ) delta = range / 10; // This is a good default delta?
+    if ( delta < 1 ) delta = (range / 10.0); // This is a good default delta?
     int rowno = range / delta;
     int row [ rowno ];
-    
+
     /* Print same useful data if '-H' is enabled */
     if (human) fprintf( fout,
         "Read values:   %d\n"
-        "Maximum value: %d\n"
-        "Minimum value: %d\n"
-        "Range:         %d\n"
-        "Delta:         %d\n"
+        "Maximum value: %lf\n"
+        "Minimum value: %lf\n"
+        "Range:         %lf\n"
+        "Delta:         %lf\n"
         ,total,max,min,range,delta);
-    
-    
+
+
     for (i=0;i<rowno;i++) row[i] = 0;
     for (i=0;i<total;i++)
     {
         for (j=0;j<rowno;j++)
-            if ( data[i] < delta * j )
+            if ( data[i] < delta * (j+1.0) )
             {
                 row[j]++;
                 if (row[j] > maxrow) maxrow = row[j];
@@ -155,7 +158,7 @@ int main (int argc, char **argv)
     {
         for (i=0;i<rowno;i++)
         {
-            fprintf(fout,"%d %d\n", (i+1)*delta, row[i]);
+            fprintf(fout,"%f %d\n", ((double)(i+1.0))*delta, row[i]);
         }
     }
     return 0;
