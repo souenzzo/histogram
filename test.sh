@@ -7,8 +7,12 @@ else
 	TOTAL="$1"
 fi
 
-for i in $(seq 1 $TOTAL) ; do
-	echo "$RANDOM.$RANDOM"
+for i in $(seq 2 $TOTAL) ; do
+	if (( $RANDOM % 2 )) ; then
+		echo "-$RANDOM.$RANDOM"
+	else
+		echo "$RANDOM.$RANDOM"
+	fi
 done
 
 exit
