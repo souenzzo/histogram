@@ -84,7 +84,7 @@ int main (int argc, char **argv)
 
     /* Variables for parse data */
     int i,j;
-    double 
+    double
         min = DBL_MAX,
         max = DBL_MIN,
         data[buffer];
@@ -125,12 +125,11 @@ int main (int argc, char **argv)
         "Delta:         %lf\n"
         ,total,max,min,range,delta);
 
-
     for (i=0;i<rowno;i++) row[i] = 0;
     for (i=0;i<total;i++)
     {
         for (j=0;j<rowno;j++)
-            if ( data[i] < delta * (j+1.0) )
+            if ( data[i] < delta * (j+1.0) ) //Fix here to allow negative numbers
             {
                 row[j]++;
                 if (row[j] > maxrow) maxrow = row[j];
