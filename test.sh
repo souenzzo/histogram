@@ -8,7 +8,7 @@ else
 fi
 
 for i in $(seq 1 $TOTAL) ; do
-	echo $RANDOM
+	echo "$RANDOM.$RANDOM"
 done
 
 exit
