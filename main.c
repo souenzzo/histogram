@@ -129,7 +129,7 @@ int main (int argc, char **argv)
     for (i=0;i<total;i++)
     {
         for (j=0;j<rowno;j++)
-            if ( data[i] < delta * (j+1.0) ) //Fix here to allow negative numbers
+            if ( data[i] < (delta * (j+1.0)) + min )
             {
                 row[j]++;
                 if (row[j] > maxrow) maxrow = row[j];
@@ -157,7 +157,7 @@ int main (int argc, char **argv)
     {
         for (i=0;i<rowno;i++)
         {
-            fprintf(fout,"%f %d\n", ((double)(i+1.0))*delta, row[i]);
+            fprintf(fout,"%f %d\n", (delta * (i+1.0)) + min, row[i]);
         }
     }
     return 0;
