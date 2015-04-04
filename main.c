@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <limits.h>
 #include <float.h>
 #include <stdlib.h>
 #include <getopt.h>
@@ -118,11 +117,11 @@ int main (int argc, char **argv)
 
     /* Print same useful data if '-H' is enabled */
     if (human) fprintf( fout,
-        "Read values:   %d\n"
-        "Maximum value: %lf\n"
-        "Minimum value: %lf\n"
-        "Range:         %lf\n"
-        "Delta:         %lf\n"
+        "# Read values:   %d\n"
+        "# Maximum value: %lf\n"
+        "# Minimum value: %lf\n"
+        "# Range:         %lf\n"
+        "# Delta:         %lf\n"
         ,total,max,min,range,delta);
 
     for (i=0;i<rowno;i++) row[i] = 0;
@@ -148,7 +147,7 @@ int main (int argc, char **argv)
         fprintf(fout,"I'm so fancy, You already know! \u266A \n");
         for (i=0;i<rowno;i++)
         {
-            fprintf(fout,"%d\t|", row[i]);
+            fprintf(fout,"%f~%f - %d\t|",(delta * (i+1.0)) + min,(delta*(i+2.0))+min, row[i]);
             for (j=0;j<((row[i] * col)/(2*maxrow));j++) fprintf(fout,"=");
             fprintf(fout,"|\n");
         }
