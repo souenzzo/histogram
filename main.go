@@ -17,7 +17,10 @@ func main() {
 	fmt.Println(H.Kmap())
 	fmt.Println(H.Imap())
 	fmt.Println(H.Krecords(
-		func(k float64) string { return fmt.Sprintf("%.2f", k) },
-		func(v uint64) string { return fmt.Sprintf("%d", v) },
-	))
+		func(i int64, k float64, v uint64) []string {
+			return []string{
+				fmt.Sprintf("%.2f", k),
+				fmt.Sprintf("%d", v),
+			}
+		}))
 }

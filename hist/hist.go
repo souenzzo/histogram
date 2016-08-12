@@ -43,17 +43,16 @@ func (H Hist) Kmap() map[float64]uint64 {
 
 func Keys(map[float64]uint64) []float64 {
 
+	return []float64{}
 }
 
-func (H Hist) Krecords(p1 func(float64) string, p2 func(uint64) string) [][]string {
+func (H Hist) Krecords(p func(int64, float64, uint64) []string) [][]string {
 	rec := [][]string{}
-	for k, v := range H.Kmap() {
-		rec = append(rec, []string{
-			p1(k),
-			p2(v),
-		})
+	var k float64
+	for i, v := range H.imap {
+		k = float64(i) * H.delta
+		rec = append(rec, p(i, k, v))
 
 	}
 	return rec
-
 }
