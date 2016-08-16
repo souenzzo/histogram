@@ -14,13 +14,6 @@ func main() {
 	for _, v := range data {
 		H.Add(v)
 	}
-	fmt.Println(H.Kmap())
-	fmt.Println(H.Imap())
-	fmt.Println(H.Krecords(
-		func(i int64, k float64, v uint64) []string {
-			return []string{
-				fmt.Sprintf("%.2f", k),
-				fmt.Sprintf("%d", v),
-			}
-		}))
+	H.Adds(data)
+	fmt.Println(H)
 }

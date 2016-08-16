@@ -12,47 +12,29 @@ func New(d float64) Hist {
 	}
 }
 
-func (H *Hist) Add(v float64) int64 {
-	i := int64(v / H.delta)
+func (H *Hist) Add(v float64) (i int64) {
+	i = int64(v / H.delta)
 	H.imap[i] = H.imap[i] + 1
 	return i
 }
 
-func (H *Hist) Adds(vs []float64) int64 {
-	var i int64
+func (H *Hist) Adds(vs []float64) int {
 	for _, v := range vs {
-		i = int64(v / H.delta)
-		H.imap[i] = H.imap[i] + 1
+		H.Add(v)
 	}
-	return i
+	return len(vs)
 }
 
-func (H Hist) Imap() map[int64]uint64 {
-	return H.imap
-}
-
-func (H Hist) Kmap() map[float64]uint64 {
-	Kmap := make(map[float64]uint64)
-	d := H.delta
-	for k, v := range H.imap {
-		Kmap[float64(k)*d] = v
-	}
-
-	return Kmap
-}
-
-func Keys(map[float64]uint64) []float64 {
-
-	return []float64{}
-}
-
-func (H Hist) Krecords(p func(int64, float64, uint64) []string) [][]string {
-	rec := [][]string{}
-	var k float64
+func (H Hist) Imap() (imap map[int64]uint64) {
 	for i, v := range H.imap {
-		k = float64(i) * H.delta
-		rec = append(rec, p(i, k, v))
-
+		imap[i] = v
 	}
-	return rec
+	return imap
+}
+
+func (H Hist) Kmap() (kmap map[float64]uint64) {
+	for i, v := range H.imap {
+		kmap[float64(i)*H.delta] = v
+	}
+	return kmap
 }
