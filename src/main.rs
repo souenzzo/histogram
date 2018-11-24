@@ -13,7 +13,22 @@ pub struct Histogram<T> {
     sorted_values: BTreeMap<T, T>,
 }
 
-pub trait Num: num_traits::One + num_traits::Zero + ops::Add + Ord + Clone + fmt::Display {}
+pub trait Num: num_traits::One + num_traits::Zero + ops::Add + Ord + Clone + fmt::Display {
+    fn max_val(a: Self, b: Self) -> Self {
+        match Self::cmp(&a, &b) {
+            Ordering::Equal => { a }
+            Ordering::Less => { a }
+            Ordering::Greater => { b }
+        }
+    }
+    fn min_val(a: Self, b: Self) -> Self {
+        match Self::cmp(&a, &b) {
+            Ordering::Equal => { a }
+            Ordering::Less => { b }
+            Ordering::Greater => { a }
+        }
+    }
+}
 
 impl<T> Histogram<T> where T: Num {
     fn new(a: T) -> Self {
@@ -59,28 +74,8 @@ impl<T> Histogram<T> where T: Num {
             };
         }
         return Self {
-            max: match T::cmp(&self.max, &a.max) {
-                Ordering::Equal => {
-                    self.max
-                }
-                Ordering::Less => {
-                    a.max
-                }
-                Ordering::Greater => {
-                    self.max
-                }
-            },
-            min: match T::cmp(&self.min, &a.min) {
-                Ordering::Equal => {
-                    self.min
-                }
-                Ordering::Less => {
-                    self.min
-                }
-                Ordering::Greater => {
-                    a.min
-                }
-            },
+            max: T::max_val(self.max, a.max),
+            min: T::min_val(self.min, a.min),
             size: T::add(self.size, a.size),
             sorted_values: sorted_values,
         };
@@ -129,6 +124,20 @@ mod test {
         assert_eq!(
             Some(Histogram::new(1)),
             Histogram::from_vec(vec!(1)),
+        )
+    }
+
+    #[test]
+    fn test_02() {
+        let data: Vec<i64> = Vec::new();
+        assert_eq!(None, Histogram::from_vec(data))
+    }
+
+    #[test]
+    fn test_03() {
+        assert_eq!(
+            Some(Histogram::combine(Histogram::new(1), Histogram::new(2))),
+            Histogram::from_vec(vec!(1, 2)),
         )
     }
 }
